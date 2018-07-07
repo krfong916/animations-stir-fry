@@ -3,31 +3,29 @@ import { AppRegistry, StyleSheet, Text, View, Animated, TouchableWithoutFeedback
 
 export default class animations extends Component {
   state = {
-    animation: new Animated.Value(0)
+    animation: new Animated.Value(1)
   }
-
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 300,
-        duration: 1500
-    }).start(() => {
-      this.state.animation.setValue(0);
-    });
+      toValue: -2,
+      duration: 1500
+    }).start();
   }
 
   render() {
     const animatedStyles = {
       transform: [
-          {
-            translateY: this.state.animation
-          }
+        {
+          scaleY: this.state.animation
+        }
       ]
     }
-
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.startAnimation}>
-          <Animated.View style={[styles.box, animatedStyles]} />
+          <Animated.View style={[styles.box, animatedStyles]}>
+            <Text>The scale</Text>
+          </Animated.View>
         </TouchableWithoutFeedback>
       </View>
     );
