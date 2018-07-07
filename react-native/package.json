@@ -18,9 +18,5 @@
 	},
 	"jest": {
 		"preset": "react-native"
-	},
-	"main": "index.js",
-	"repository": "https://gitlab.com/codedaily/reactnativeanimations.git",
-	"author": "Kyle Fong <krfong@ucsc.edu>",
-	"license": "MIT"
+	}
 }

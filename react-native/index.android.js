@@ -1,25 +1,24 @@
 import React, { Component } from "react";
-import { AppRegistry, StyleSheet, View, Animated, TouchableWithoutFeedback } from "react-native";
+import { AppRegistry, StyleSheet, Text, View, Animated, TouchableWithoutFeedback } from "react-native";
 
 export default class animations extends Component {
   state = {
-    animation: new Animated.Value(1),
+    animation: new Animated.Value(0),
   };
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 0,
-      duration: 350
+      toValue: 300,
+      duration: 1500
     }).start(() => {
-      Animated.timing(this.state.animation, {
-        toValue: 1,
-        duration: 500,
-      }).start();
+      this.state.animation.setValue(0);
     });
   }
   
   render() {
     const animatedStyles = {
-      opacity: this.state.animation
+      transform: [
+        { translateY: this.state.animation }
+      ]
     }
     return (
       <View style={styles.container}>
