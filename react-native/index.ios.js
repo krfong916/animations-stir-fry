@@ -3,45 +3,34 @@ import { AppRegistry, StyleSheet, Text, View, Animated, TouchableWithoutFeedback
 
 export default class animations extends Component {
   state = {
-    animation: new Animated.Value(0)
-  }
+    animation : new Animated.Value(0),
+  };
+
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-     toValue: 1,
-     duration: 1500
-    }).start(() => {
-      Animated.timing(this.state.animation, {
-        toValue: 0,
-        duration: 1500
-      }).start();
-    });
+      toValue: 360,
+      duration: 1500
+    }).start();
   }
 
   render() {
-    const boxInterpolation =
+    const rotateInterpolate =
       this.state.animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"]
-      });
-
-    const boxAnimatedStyle = {
-      backgroundColor: boxInterpolation
-    };
-
-    const colorInterpolation =
-      this.state.animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["rgb(99,71,255)", "rgb(255,99,71)"]
-      });
-
-    const textAnimatedStyle = {
-      backgroundColor: colorInterpolation
-    };
+        inputRange: [0, 360],
+        outputRange: ["0deg", "180deg"],
+      })
+    const animatedStyles = {
+      transform: [
+        {
+          rotate: rotateInterpolate
+        }
+      ]
+    }
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.startAnimation}>
-          <Animated.View style={[styles.box, boxAnimatedStyle]}>
-            <Animated.Text style={textAnimatedStyle}>Hello Animation!</Animated.Text>
+          <Animated.View style={[styles.box, animatedStyles]}>
+            <Text>Hello Rotate!</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       </View>
@@ -59,6 +48,7 @@ const styles = StyleSheet.create({
   box: {
     width: 150,
     height: 150,
+    backgroundColor: "tomato",
     alignItems: "center",
     justifyContent: "center",
   }
