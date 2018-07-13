@@ -5,24 +5,44 @@ export default class animations extends Component {
   state = {
     animation: new Animated.Value(0)
   }
-
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 40,
-      duration: 1500
-    }).start();
+     toValue: 1,
+     duration: 1500
+    }).start(() => {
+      Animated.timing(this.state.animation, {
+        toValue: 0,
+        duration: 1500
+      }).start();
+    });
   }
-  render() {
 
-    const animatedStyles = {
-      top: this.state.animation,
-      left: this.state.animation,
-      right: this.state.animation,
-    }
+  render() {
+    const boxInterpolation =
+      this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"]
+      });
+
+    const boxAnimatedStyle = {
+      backgroundColor: boxInterpolation
+    };
+
+    const colorInterpolation =
+      this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["rgb(99,71,255)", "rgb(255,99,71)"]
+      });
+
+    const textAnimatedStyle = {
+      backgroundColor: colorInterpolation
+    };
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.startAnimation}>
-          <Animated.View style={[styles.box, animatedStyles]} />
+          <Animated.View style={[styles.box, boxAnimatedStyle]}>
+            <Animated.Text style={textAnimatedStyle}>Hello Animation!</Animated.Text>
+          </Animated.View>
         </TouchableWithoutFeedback>
       </View>
     );
@@ -37,12 +57,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   box: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    right: 0,
+    width: 150,
     height: 150,
-    backgroundColor: "tomato",
+    alignItems: "center",
+    justifyContent: "center",
   }
 });
 
