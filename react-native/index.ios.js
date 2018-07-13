@@ -3,35 +3,38 @@ import { AppRegistry, StyleSheet, Text, View, Animated, TouchableWithoutFeedback
 
 export default class animations extends Component {
   state = {
-    animation : new Animated.Value(0),
+    animation: new Animated.Value(0),
   };
 
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 360,
+      toValue: 1,
       duration: 1500
     }).start();
   }
-
+  
   render() {
-    const rotateInterpolate =
+
+    const widthInterpolate =
       this.state.animation.interpolate({
-        inputRange: [0, 360],
-        outputRange: ["0deg", "180deg"],
-      })
+        inputRange: [0,1],
+        outputRange: ["20%", "50%"]
+    })
+
+    const heightInterpolate =
+      this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["20%", "30%"]
+      });
+
     const animatedStyles = {
-      transform: [
-        {
-          rotate: rotateInterpolate
-        }
-      ]
+      width: widthInterpolate,
+      height: heightInterpolate
     }
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.startAnimation}>
-          <Animated.View style={[styles.box, animatedStyles]}>
-            <Text>Hello Rotate!</Text>
-          </Animated.View>
+          <Animated.View style={[styles.box, animatedStyles]} />
         </TouchableWithoutFeedback>
       </View>
     );
@@ -46,11 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   box: {
-    width: 150,
-    height: 150,
     backgroundColor: "tomato",
-    alignItems: "center",
-    justifyContent: "center",
   }
 });
 
